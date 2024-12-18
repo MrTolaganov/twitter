@@ -4,10 +4,10 @@ import { connectDatabase } from '@/lib/mongoose'
 import Notification from '@/models/notification.model'
 import { INotification } from '@/types'
 
-export async function sendNotification(receiverId: string, message: string) {
+export async function sendNotification(receiverId: string, message: string, path: string) {
   try {
     await connectDatabase()
-    await Notification.create({ receiver: receiverId, message })
+    await Notification.create({ receiver: receiverId, message, path })
   } catch (error) {
     throw new Error(error as string)
   }
@@ -19,8 +19,7 @@ export async function hasUnreadNotifications(userId: string) {
     const unReadNotifications = await Notification.find({
       $and: [{ receiver: userId }, { isRead: false }],
     })
-    const hasUnreadNotification = unReadNotifications.length > 0
-    return { hasUnreadNotification }
+    return { numUnreadNotifications: unReadNotifications.length }
   } catch (error) {
     throw new Error(error as string)
   }
@@ -31,7 +30,7 @@ export async function getUserNotifications(userId: string) {
     await connectDatabase()
     const unReadNotifications = await Notification.find({ receiver: userId })
       .sort({ createdAt: -1 })
-      .select('message createdAt')
+      .select('message createdAt path')
     await Notification.updateMany({ receiver: userId }, { isRead: true })
     return {
       unReadNotifications: JSON.parse(JSON.stringify(unReadNotifications)) as INotification[],

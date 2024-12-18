@@ -81,8 +81,51 @@ export async function hasUnreadMessages(userId: string) {
   try {
     await connectDatabase()
     const userUnreadMessages = await Chat.find({ $and: [{ receiver: userId, isRead: false }] })
-    const hasUnreadMessage = userUnreadMessages.length > 0
-    return { hasUnreadMessage }
+    return { numMessages: userUnreadMessages.length }
+  } catch (error) {
+    throw new Error(error as string)
+  }
+}
+
+export async function deleteMessage(messageId: string) {
+  try {
+    await connectDatabase()
+    await Chat.findByIdAndDelete(messageId)
+  } catch (error) {
+    throw new Error(error as string)
+  }
+}
+
+export async function editMessage(messageId: string, message: string) {
+  try {
+    await connectDatabase()
+    const editedChat = await Chat.findByIdAndUpdate(messageId, { message }, { new: true })
+    return { editedChat: JSON.parse(JSON.stringify(editedChat)) as IChat }
+  } catch (error) {
+    throw new Error(error as string)
+  }
+}
+
+export async function deleteChatContact(senderId: string, receiverId: string) {
+  try {
+    await connectDatabase()
+    await Chat.deleteMany({
+      $or: [
+        { sender: senderId, receiver: receiverId },
+        { sender: receiverId, receiver: senderId },
+      ],
+    })
+    const { numMessages } = await hasUnreadMessages(senderId)
+    return { numMessages }
+  } catch (error) {
+    throw new Error(error as string)
+  }
+}
+
+export async function clearChatContacts(userId: string) {
+  try {
+    await connectDatabase()
+    await Chat.deleteMany({ $or: [{ sender: userId }, { receiver: userId }] })
   } catch (error) {
     throw new Error(error as string)
   }

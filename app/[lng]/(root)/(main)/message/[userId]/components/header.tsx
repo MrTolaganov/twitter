@@ -10,8 +10,8 @@ export default function Header({ profileImage, fullName, username }: IUser) {
 
   return (
     <Link
-      href={`/${lng}/${username}`}
-      className='p-2 text-sm fixed z-50 bg-background items-center block w-[calc(100vw-64px)] md:w-[550px] border-b border-primary'
+      href={`/${lng}/user/${username}`}
+      className='p-2 text-sm fixed z-50 bg-background items-center block w-[100vw] md:w-[calc(100vw/3)] border-b border-muted-foreground'
     >
       {/* <Link href={`/${lng}/profile`} className='flex items-center cursor-pointer bg-secondary'> */}
       <div className='flex items-center gap-x-2'>

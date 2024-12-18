@@ -8,7 +8,7 @@ export default async function Layout({ children, params }: LayoutProps) {
 
   return (
     <>
-      <div className='h-[5vh] flex items-center justify-center border-b border-primary fixed inset-0 z-50 bg-background'>
+      <div className='h-[5vh] flex items-center justify-center border-b border-muted-foreground fixed inset-0 z-50 bg-background'>
         <h1 className='text-xl font-bold'>
           {t('developedBy')}{' '}
           <Link

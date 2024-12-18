@@ -5,6 +5,7 @@ import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '@/lib/auth-options'
 import { redirect } from 'next/navigation'
 import { getLastThreeUsers } from '@/actions/user.action'
+import Mobile from './components/mobile'
 
 export default async function Layout({ children, params }: LayoutProps) {
   const { lng } = await params
@@ -17,8 +18,11 @@ export default async function Layout({ children, params }: LayoutProps) {
   return (
     <>
       <Sidebar />
-      <div className='pl-16 md:pl-[450px] max-md:w-full md:w-[1000px] mt-[5vh]'>{children}</div>
+      <div className='md:col-span-4 md:pl-[calc(100vw/3)] md:w-[calc(100vw/3)] mt-[5vh]'>
+        {children}
+      </div>
       <Aside users={users} />
+      <Mobile />
     </>
   )
 }

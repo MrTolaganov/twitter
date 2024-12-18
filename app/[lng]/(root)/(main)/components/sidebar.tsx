@@ -21,17 +21,17 @@ export default function Sidebar() {
   const pathname = usePathname()
   const { t } = useTranslate()
   const { lng } = useParams()
-  const { hasNotification, setHasNotification } = useNotification()
-  const { hasMessage, setHasMessage } = useMessage()
+  const { numNotifications, setNumNotifications } = useNotification()
+  const { numMessages, setNumMessages } = useMessage()
 
   useEffect(() => {
     const getHasNotification = async () => {
-      const { hasUnreadNotification } = await hasUnreadNotifications(session?.currentUser._id!)
-      setHasNotification(hasUnreadNotification)
+      const { numUnreadNotifications } = await hasUnreadNotifications(session?.currentUser._id!)
+      setNumNotifications(numUnreadNotifications)
     }
     const getHasMessage = async () => {
-      const { hasUnreadMessage } = await hasUnreadMessages(session?.currentUser._id!)
-      setHasMessage(hasUnreadMessage)
+      const { numMessages } = await hasUnreadMessages(session?.currentUser._id!)
+      setNumMessages(numMessages)
     }
     getHasNotification()
     getHasMessage()
@@ -39,7 +39,7 @@ export default function Sidebar() {
   }, [session?.currentUser._id, pathname])
 
   return (
-    <div className='h-[95vh] border-r border-primary flex flex-col justify-between items-center py-2 px-1 w-16 md:w-[450px] fixed bg-background'>
+    <div className='max-md:hidden h-[95vh] border-r border-muted-foreground flex flex-col justify-between items-center py-2 px-1 md:w-[calc(100vw/3)] fixed bg-background'>
       <div className='flex flex-col gap-y-2'>
         <Logo />
         <div className='flex flex-col gap-y-2 max-md:items-center'>
@@ -54,22 +54,31 @@ export default function Sidebar() {
             >
               <div className='relative'>
                 <sidebarLink.icon />
-                {sidebarLink.path === '/notifications' && hasNotification && (
-                  <span className='absolute size-3 bg-blue-400/80 top-0 right-0 rounded-full' />
+                {sidebarLink.path === '/notifications' && numNotifications > 0 && (
+                  <span className='absolute size-3 bg-blue-400 text-xs top-0 right-0 rounded-full flex justify-center items-center p-2'>
+                    {numNotifications}
+                  </span>
                 )}
-                {sidebarLink.path === '/messages' && hasMessage && (
-                  <span className='absolute size-3 bg-blue-400/80 top-0 right-0 rounded-full' />
+                {sidebarLink.path === '/messages' && numMessages > 0 && (
+                  <span className='absolute size-3 bg-blue-400 text-xs top-0 right-0 rounded-full flex justify-center items-center p-2'>
+                    {numMessages}
+                  </span>
                 )}
               </div>
               <span className='max-md:hidden'>{t(sidebarLink.name)}</span>
             </Link>
           ))}
         </div>
-        <Button className='h-12 rounded-full bg-blue-400/80 text-white  hover:bg-blue-400/80'>
-          <div className='py-2 cursor-pointer '>
+        <Button
+          className='h-12 rounded-full bg-blue-400/80 text-white  hover:bg-blue-400/80'
+          asChild
+        >
+          <Link href={`/${lng}/create-post`} className='py-2 block'>
             <Plus className='md:hidden size-10' />
-            <span className='max-md:hidden text-lg font-semibold'>{t('posts').slice(0, 4)}</span>
-          </div>
+            <span className='max-md:hidden text-lg font-semibold capitalize'>
+              {t('posts').slice(0, 4)}
+            </span>
+          </Link>
         </Button>
       </div>
       <Link

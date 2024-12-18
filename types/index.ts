@@ -23,8 +23,9 @@ export interface IUser {
   location: string
   profileImage: string
   backgroundImage: string
-  createdAt: string
+  createdAt: Date
   lastMessage: IChat
+  isFollowing: boolean
 }
 
 export interface IOtp {
@@ -41,6 +42,7 @@ export interface IError extends Error {
 export interface INotification {
   _id: string
   message: string
+  path: string
   createdAt: Date
 }
 
@@ -51,5 +53,25 @@ export interface IChat {
   isRead: boolean
   sender?: IUser
   receiver: IUser
+  createdAt: Date
+}
+
+export interface IPost {
+  _id: string
+  text: string
+  image: string
+  author: IUser
+  liked: boolean
+  numLikes: number
+  commented: boolean
+  numComments: number
+  createdAt: Date
+}
+
+export interface IComment {
+  _id: string
+  text: string
+  user: IUser
+  post: IPost
   createdAt: Date
 }

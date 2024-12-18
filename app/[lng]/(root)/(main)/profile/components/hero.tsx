@@ -7,10 +7,12 @@ import SetUp from './setup'
 import { useDialog } from '@/hooks/use-dialog'
 import Image from 'next/image'
 import Link from 'next/link'
+import useTranslate from '@/hooks/use-translate'
 
 export default function Hero() {
   const { data: session } = useSession()
   const { setOpenedProfileDialog } = useDialog()
+  const { t } = useTranslate()
 
   return (
     <>
@@ -53,7 +55,7 @@ export default function Hero() {
             className='rounded-full border-2 border-secondary'
             onClick={() => setOpenedProfileDialog(true)}
           >
-            Edit Profile
+            {t('editProfile')}
           </Button>
         </div>
       </div>

@@ -24,7 +24,7 @@ export default function About({ user, numFollowings, numFollowers }: Props) {
 
   const onClickFollows = (value: 'followings' | 'followers') => {
     setValue(value)
-    router.push(`/${lng}/${username}/follows`)
+    router.push(`/${lng}/user/${username}/follows`)
   }
 
   return (
@@ -37,7 +37,7 @@ export default function About({ user, numFollowings, numFollowers }: Props) {
         <div className='flex items-center gap-x-2 text-muted-foreground'>
           <CalendarDays size={14} />
           <span className='text-sm'>
-            {t('joinadAt')} {format(new Date(createdAt!), 'MMM dd, yyyy')}
+            {t('joinadAt')} {format(createdAt, 'MMM dd, yyyy')}
           </span>
         </div>
         {location && (
@@ -52,23 +52,23 @@ export default function About({ user, numFollowings, numFollowers }: Props) {
             <span className='text-sm'>{bio}</span>
           </div>
         )}
-        <div className='text-sm text-blue-400/80 flex items-center gap-x-8'>
+        <div className='text-sm text-blue-400/80 flex items-center gap-x-8 lowercase'>
           <div
             className='hover:underline cursor-pointer'
             onClick={() => onClickFollows('followings')}
           >
-            {numFollowings} {t('followings')}
+            {numFollowings} {numFollowings > 1 ? t('followings') : t('following')}
           </div>
           <div
             className='hover:underline cursor-pointer'
             onClick={() => onClickFollows('followers')}
           >
-            {numFollowers} {t('followers')}
+            {numFollowers} {numFollowers > 1 ? t('followers') : t('follower')}
           </div>
         </div>
       </div>
       <Link href={`/${lng}/message/${user._id}`}>
-        <Button variant={'secondary'}>Message</Button>
+        <Button variant={'secondary'}>{t('message')}</Button>
       </Link>
     </div>
   )

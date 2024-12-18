@@ -1,20 +1,18 @@
-import { getChatContacts } from '@/actions/chat.action'
+import { Metadata } from 'next'
 import Header from '../components/header'
-import { getServerSession } from 'next-auth'
-import { nextAuthOptions } from '@/lib/auth-options'
 import MessagesList from './components/messages-list'
 
-export default async function Page() {
-  const session = await getServerSession(nextAuthOptions)
-  const { contacts } = await getChatContacts(session?.currentUser._id!)
-  // await getChatContacts(session?.currentUser._id!)
+export const metadata: Metadata = {
+  title: 'Twitter | Messages',
+}
 
+export default async function Page() {
   return (
-    <>
-      <div className='max-md:h-[8vh]'>
+    <div className='md:w-[calc(100vw/3)]'>
+      <div className='max-md:h-[56px]'>
         <Header />
       </div>
-      <MessagesList contacts={contacts} />
-    </>
+      <MessagesList />
+    </div>
   )
 }

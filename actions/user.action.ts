@@ -68,8 +68,13 @@ export async function getLastThreeUsers(userId: string) {
             break
           }
         }
+
+        const followingUser = await Follow.findOne({
+          $and: [{ follower: userId }, { following: user._id }],
+        })
+
         if (isPushed) {
-          lastThreeUsers.push(user)
+          lastThreeUsers.push({ ...user._doc, isFollowing: Boolean(followingUser) })
           count++
         }
         if (count === 3) break
@@ -86,11 +91,18 @@ export async function getLastThreeUsers(userId: string) {
   }
 }
 
-export async function getDetailedUser(username: string) {
+export async function getDetailedUser(username: string, currentUserId: string) {
   try {
     await connectDatabase()
     const user = await User.findOne({ username })
-    return { user: JSON.parse(JSON.stringify(user)) as IUser }
+    const followingUser = await Follow.findOne({
+      $and: [{ follower: currentUserId }, { following: user?._id }],
+    })
+    return {
+      user: JSON.parse(
+        JSON.stringify({ ...user._doc, isFollowing: Boolean(followingUser) })
+      ) as IUser,
+    }
   } catch (error) {
     throw new Error(error as string)
   }
@@ -100,7 +112,26 @@ export async function getUserById(userId: string) {
   try {
     await connectDatabase()
     const user = await User.findById(userId)
-    return { user: JSON.parse(JSON.stringify(user)) as IUser }
+    return {
+      user: JSON.parse(JSON.stringify(user)) as IUser,
+    }
+  } catch (error) {
+    throw new Error(error as string)
+  }
+}
+
+export async function getExploredUsers(userId: string) {
+  try {
+    await connectDatabase()
+    const usersExceptUserId = await User.find({ _id: { $ne: userId } })
+    const allExploredUsers: any[] = []
+    for (const user of usersExceptUserId) {
+      const followingUser = await Follow.findOne({
+        $and: [{ follower: userId }, { following: user._id }],
+      })
+      allExploredUsers.push({ ...user._doc, isFollowing: Boolean(followingUser) })
+    }
+    return { exploredUsers: JSON.parse(JSON.stringify(allExploredUsers)) as IUser[] }
   } catch (error) {
     throw new Error(error as string)
   }

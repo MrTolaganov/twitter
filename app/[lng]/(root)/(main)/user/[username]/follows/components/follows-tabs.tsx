@@ -18,15 +18,19 @@ export default function FollowsTabs({ followings, followers }: Props) {
   return (
     <Tabs defaultValue={value}>
       <TabsList className='grid w-full grid-cols-2'>
-        <TabsTrigger value='followings'>{t('followings')}</TabsTrigger>
-        <TabsTrigger value='followers'>{t('followers')}</TabsTrigger>
+        <TabsTrigger value='followings' className='lowercase'>
+          {followings.length} {followings.length > 1 ? t('followings') : t('follower')}
+        </TabsTrigger>
+        <TabsTrigger value='followers' className='lowercase'>
+          {followers.length} {followers.length > 1 ? t('followers') : t('follower')}
+        </TabsTrigger>
       </TabsList>
-      <TabsContent value='followings' className='md:px-4'>
+      <TabsContent value='followings' className='p-2'>
         {followings.map(following => (
           <UserCard key={following._id} {...following} />
         ))}
       </TabsContent>
-      <TabsContent value='followers' className='md:px-4'>
+      <TabsContent value='followers' className='p-2'>
         {followers.map(follower => (
           <UserCard key={follower._id} {...follower} />
         ))}

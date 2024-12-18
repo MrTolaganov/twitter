@@ -24,7 +24,7 @@ export default function About({ numFollowings, numFollowers }: Props) {
 
   const onClickFollows = (value: 'followings' | 'followers') => {
     setValue(value)
-    router.push(`/${lng}/${session?.currentUser.username}/follows`)
+    router.push(`/${lng}/user/${session?.currentUser.username}/follows`)
   }
 
   useEffect(() => {
@@ -59,18 +59,18 @@ export default function About({ numFollowings, numFollowers }: Props) {
               <span className='text-sm'>{session.currentUser.bio}</span>
             </div>
           )}
-          <div className='text-sm text-blue-400 flex items-center gap-x-8'>
+          <div className='text-sm text-blue-400 flex items-center gap-x-8 lowercase'>
             <div
               onClick={() => onClickFollows('followings')}
               className='hover:underline hover:cursor-pointer'
             >
-              {numFollowings} {t('followings')}
+              {numFollowings} {numFollowings > 1 ? t('followings') : t('following')}
             </div>
             <div
               onClick={() => onClickFollows('followers')}
               className='hover:underline hover:cursor-pointer'
             >
-              {numFollowers} {t('followers')}
+              {numFollowers} {numFollowers > 1 ? t('followers') : t('follower')}
             </div>
           </div>
         </div>

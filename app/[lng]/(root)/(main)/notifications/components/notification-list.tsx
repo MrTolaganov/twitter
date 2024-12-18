@@ -20,7 +20,7 @@ import { toast } from 'sonner'
 export default function NotificationList() {
   const [notifications, setNotifications] = useState<INotification[]>([])
   const { lng } = useParams()
-  const { setHasNotification } = useNotification()
+  const { setNumNotifications } = useNotification()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isFetching, setIsFetching] = useState(false)
@@ -29,8 +29,8 @@ export default function NotificationList() {
 
   const onClickNotification = (notificationId: string, path: string) => {
     setIsLoading(true)
+    router.push(path)
     deleteNotification(notificationId)
-      .then(() => router.push(path))
       .catch(() => toast.error(t('somethingWentWrong')))
       .finally(() => setIsLoading(false))
   }
@@ -43,23 +43,23 @@ export default function NotificationList() {
       .finally(() => setIsLoading(false))
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    const getAllNotifications = async () => {
-      try {
-        setIsFetching(true)
-        const { unReadNotifications } = await getUserNotifications(session?.currentUser._id!)
-        setNotifications(unReadNotifications)
-        setHasNotification(false)
-        setIsFetching(false)
-      } catch {
-        toast.error(t('somethingWentWrong'))
-      }
+  const getAllNotifications = async () => {
+    try {
+      setIsFetching(true)
+      const { unReadNotifications } = await getUserNotifications(session?.currentUser._id!)
+      setNotifications(unReadNotifications)
+      setNumNotifications(0)
+      setIsFetching(false)
+    } catch {
+      toast.error(t('somethingWentWrong'))
     }
+  }
+
+  useEffect(() => {
     if (session?.currentUser._id) {
       getAllNotifications()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.currentUser._id])
 
   return (
@@ -75,12 +75,7 @@ export default function NotificationList() {
               <div
                 key={notification._id}
                 className='flex items-center justify-between p-2 border-t hover:bg-secondary gap-x-2 hover:cursor-pointer'
-                onClick={() =>
-                  onClickNotification(
-                    notification._id,
-                    `/${lng}/${notification.message.split(' ').at(0)}`
-                  )
-                }
+                onClick={() => onClickNotification(notification._id, `/${lng}${notification.path}`)}
               >
                 <div className='flex items-center gap-x-2'>
                   <FaXTwitter size={32} />
@@ -99,10 +94,12 @@ export default function NotificationList() {
               </div>
             )}
           </div>
-          {notifications.length > 0 && (
+          {notifications.length > 0 ? (
             <Button variant={'destructive'} disabled={isLoading} onClick={onClearNotifications}>
-              Clear all
+              {t('clearAll')}
             </Button>
+          ) : (
+            <span>{t('anyNotifications')}</span>
           )}
         </div>
       )}

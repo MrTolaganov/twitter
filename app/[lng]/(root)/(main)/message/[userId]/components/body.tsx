@@ -1,7 +1,13 @@
 'use client'
 
-import { sendChatMessage } from '@/actions/chat.action'
+import { deleteMessage, editMessage, sendChatMessage } from '@/actions/chat.action'
 import { Button } from '@/components/ui/button'
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from '@/components/ui/context-menu'
 import {
   Dialog,
   DialogContent,
@@ -17,7 +23,7 @@ import { cn } from '@/lib/utils'
 import { IChat } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
-import { Check, CheckCheck, Paperclip, SendHorizontal } from 'lucide-react'
+import { Check, CheckCheck, Paperclip, Pencil, SendHorizontal, Trash2 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useParams, usePathname } from 'next/navigation'
@@ -39,6 +45,7 @@ export default function Body({ chats }: Props) {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
   const { userId } = useParams()
+  const [edit, setEdit] = useState({ isEditing: false, messageId: '' })
 
   const formSchema = z.object({ message: z.string().min(1), image: z.string().optional() })
 
@@ -50,13 +57,24 @@ export default function Body({ chats }: Props) {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsLoading(true)
-      const { chat } = await sendChatMessage(
-        values.message,
-        values.image!,
-        session?.currentUser._id!,
-        userId as string
-      )
-      setAllChats(prev => [...prev, chat])
+      if (edit.isEditing) {
+        const { editedChat } = await editMessage(edit.messageId, values.message)
+        // @ts-ignore
+        setAllChats(prev =>
+          prev.map(chat =>
+            chat._id === edit.messageId ? { ...editedChat, receiver: { _id: userId } } : chat
+          )
+        )
+      } else {
+        const { chat } = await sendChatMessage(
+          values.message,
+          values.image!,
+          session?.currentUser._id!,
+          userId as string
+        )
+        setAllChats(prev => [...prev, chat])
+      }
+      setEdit({ isEditing: false, messageId: '' })
       form.reset()
     } catch {
       toast.error(t('somethingWentWrong'))
@@ -65,12 +83,26 @@ export default function Body({ chats }: Props) {
     }
   }
 
+  const onDelete = async (messageId: string) => {
+    try {
+      await deleteMessage(messageId)
+      setAllChats(prev => prev.filter(chat => chat._id !== messageId))
+    } catch {
+      toast.error(t('somethingWentWrong'))
+    }
+  }
+
+  const onEdit = (messageId: string, message: string) => {
+    setEdit({ isEditing: true, messageId })
+    form.setValue('message', message)
+  }
+
   useEffect(() => divRef.current?.scrollIntoView({ behavior: 'smooth' }), [pathname])
 
   return (
     <>
       <div
-        className='min-h-[calc(100vh-156px)] flex justify-end flex-col mb-[56px] space-y-1 relative'
+        className='min-h-[calc(100vh-205px)] md:h-[calc(100vh-156px)] flex justify-end flex-col mb-[56px] space-y-1 relative'
         ref={divRef}
       >
         {allChats.length === 0 ? (
@@ -95,21 +127,43 @@ export default function Body({ chats }: Props) {
                 !chat.image && 'px-2 pb-3 pt-1'
               )}
             >
-              {chat.image ? (
-                <Image src={chat.image} alt='Image' width={300} height={200} />
-              ) : (
-                chat.message
-              )}
-              <div className='flex items-center absolute bottom-0 right-0 text-foreground'>
-                <span className='text-[8px] mr-1'>{format(chat.createdAt, 'MMM dd HH:mm')}</span>
-                {chat.receiver._id === userId &&
-                  (chat.isRead ? <CheckCheck size={12} /> : <Check size={12} />)}
-              </div>
+              <ContextMenu>
+                <ContextMenuTrigger>
+                  {chat.image ? (
+                    <Image src={chat.image} alt='Image' width={300} height={200} />
+                  ) : (
+                    chat.message
+                  )}
+                  <div className='flex items-center absolute bottom-0 right-0 text-foreground'>
+                    <span className='text-[8px] mr-1'>
+                      {format(chat.createdAt, 'MMM dd HH:mm')}
+                    </span>
+                    {chat.receiver._id === userId &&
+                      (chat.isRead ? <CheckCheck size={12} /> : <Check size={12} />)}
+                  </div>
+                </ContextMenuTrigger>
+                <ContextMenuContent className={cn(chat.receiver._id !== userId && 'hidden')}>
+                  <ContextMenuItem
+                    className={cn(chat.image ? 'hidden' : 'flex items-center gap-x-2')}
+                    onClick={() => onEdit(chat._id, chat.message)}
+                  >
+                    <Pencil size={14} />
+                    <span>{t('edit')}</span>
+                  </ContextMenuItem>
+                  <ContextMenuItem
+                    className='flex items-center gap-x-2'
+                    onClick={() => onDelete(chat._id)}
+                  >
+                    <Trash2 size={14} />
+                    <span>{t('delete')}</span>
+                  </ContextMenuItem>
+                </ContextMenuContent>
+              </ContextMenu>
             </div>
           ))
         )}
       </div>
-      <div className='p-2 text-sm fixed z-50 bg-background items-center block w-[calc(100vw-64px)] md:w-[550px] border-t border-primary bottom-0'>
+      <div className='p-2 text-sm fixed z-50 bg-background items-center block w-[100vw] md:w-[calc(100vw/3)] border-t border-muted-foreground bottom-[48.8px] md:bottom-0'>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='flex items-center gap-x-2 w-full'>
             <FormField
@@ -119,7 +173,7 @@ export default function Body({ chats }: Props) {
                 <FormItem className='flex-1'>
                   <FormControl>
                     <Input
-                      placeholder='Type a message...'
+                      placeholder={`${t('typeMessage')}...`}
                       {...field}
                       disabled={isLoading}
                       className='bg-secondary rounded-full h-10'

@@ -1,0 +1,25 @@
+'use client'
+
+import { Input } from '@/components/ui/input'
+import { useSearchQuery } from '@/hooks/use-search-query'
+import useTranslate from '@/hooks/use-translate'
+import { Search } from 'lucide-react'
+
+export default function Serachbar() {
+  const { query, setQuery } = useSearchQuery()
+  const { t } = useTranslate()
+
+  return (
+    <div className='fixed bg-background z-40 w-full md:w-[calc(100vw/3)] max-md:top-[90px] pb-2'>
+      <div className='flex items-center ml-[40px] space-y-2'>
+        <Search className='text-muted-foreground mr-[-40px] pr-2 z-30' />
+        <Input
+          className='h-12 bg-secondary rounded-full pl-[40px] w-full'
+          placeholder={`${t('search')}...`}
+          value={query}
+          onChange={e => setQuery(e.target.value!)}
+        />
+      </div>
+    </div>
+  )
+}
