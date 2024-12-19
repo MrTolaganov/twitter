@@ -71,21 +71,17 @@ export default function NotificationList() {
       ) : (
         <div className='flex flex-col items-center gap-y-4'>
           <div className='relative w-full'>
-            {notifications.map(notification => (
+            {notifications.map(({ _id, path, message, createdAt }) => (
               <div
-                key={notification._id}
+                key={_id}
                 className='flex items-center justify-between p-2 border-t hover:bg-secondary gap-x-2 hover:cursor-pointer'
-                onClick={() => onClickNotification(notification._id, `/${lng}${notification.path}`)}
+                onClick={() => onClickNotification(_id, `/${lng}${path}`)}
               >
                 <div className='flex items-center gap-x-2'>
                   <FaXTwitter size={32} />
-                  <div className='flex-1 flex justify-between items-center'>
-                    {notification.message}
-                  </div>
+                  <div className='flex-1 flex justify-between items-center'>{message}</div>
                 </div>
-                <div className='text-muted-foreground'>
-                  {format(notification.createdAt, 'MMM dd, yyyy')}
-                </div>
+                <div className='text-muted-foreground'>{format(createdAt, 'MMM dd, yyyy')}</div>
               </div>
             ))}
             {isLoading && (

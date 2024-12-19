@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   description: 'This is the twitter clone project that developed by Otabek Tulaganov',
   authors: [{ name: 'Otabek Tulaganov', url: 'https://www.otabektx.uz' }],
   icons: {
-    icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjljjHnedCRCaCfzQwcK6qkflmLoUHgRpZAw&s',
+    icon: 'https://www.thinkdesignagency.co.uk/wp-content/uploads/2023/07/Twitter-rebrands-as-X.jpg',
   },
   openGraph: {
     title: 'Twitter',

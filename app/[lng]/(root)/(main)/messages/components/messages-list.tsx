@@ -73,43 +73,35 @@ export default function MessagesList() {
       ) : (
         <div className='flex flex-col items-center gap-y-4'>
           <div className='w-full'>
-            {allContacts.map(contact => (
+            {allContacts.map(({ _id, profileImage, fullName, lastMessage }) => (
               <div
-                key={contact._id}
+                key={_id}
                 className='p-2 hover:bg-secondary block border-t border-muted-foreground'
               >
                 <div className='flex items-center gap-x-2'>
                   <Link
-                    href={`/${lng}/message/${contact._id}`}
+                    href={`/${lng}/message/${_id}`}
                     className='flex items-center gap-x-2 flex-1'
                   >
                     <Avatar>
-                      <AvatarImage
-                        src={
-                          contact.profileImage ||
-                          'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-                        }
-                        alt={contact.fullName}
-                      />
-                      <AvatarFallback className='bg-primary text-secondary font-bold'>
-                        {contact.fullName.at(0)?.toUpperCase()}
+                      <AvatarImage src={profileImage} alt={fullName!} />
+                      <AvatarFallback>
+                        <Image
+                          src={
+                            'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+                          }
+                          alt={fullName.at(0)?.toUpperCase()!}
+                          fill
+                        />
                       </AvatarFallback>
                     </Avatar>
                     <div className='flex flex-col justify-between pr-2'>
-                      <div className='font-semibold text-sm'>{contact.fullName}</div>
-                      {contact.lastMessage?.image ? (
+                      <div className='font-semibold text-sm'>{fullName}</div>
+                      {lastMessage?.image ? (
                         <div className='flex items-center gap-x-2'>
-                          <Image
-                            src={contact.lastMessage.image}
-                            alt='Image'
-                            width={30}
-                            height={20}
-                          />
+                          <Image src={lastMessage.image} alt='Image' width={30} height={20} />
                           <span
-                            className={cn(
-                              'text-sm',
-                              contact.lastMessage.isRead && 'text-muted-foreground'
-                            )}
+                            className={cn('text-sm', lastMessage.isRead && 'text-muted-foreground')}
                           >
                             {t('photo')}
                           </span>
@@ -118,12 +110,12 @@ export default function MessagesList() {
                         <div
                           className={cn(
                             'text-sm line-clamp-1',
-                            (contact.lastMessage.isRead ||
-                              contact.lastMessage.sender?._id === session?.currentUser._id) &&
+                            (lastMessage.isRead ||
+                              lastMessage.sender?._id === session?.currentUser._id) &&
                               'text-muted-foreground'
                           )}
                         >
-                          {contact.lastMessage.message}
+                          {lastMessage.message}
                         </div>
                       )}
                     </div>
@@ -132,7 +124,7 @@ export default function MessagesList() {
                     size={'icon'}
                     variant={'destructive'}
                     disabled={isLoading}
-                    onClick={() => onDelete(contact._id)}
+                    onClick={() => onDelete(_id)}
                   >
                     <Trash2 />
                   </Button>

@@ -2,7 +2,7 @@
 
 import { deleteComment, getPostComments } from '@/actions/comment.action'
 import CommentForm from '@/components/forms/comment.form'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useCommentForm } from '@/hooks/use-comment-form'
 import useTranslate from '@/hooks/use-translate'
 import { formatPostTime } from '@/lib/utils'
@@ -10,6 +10,7 @@ import { IComment, IPost } from '@/types'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { Loader2, Pencil, Trash2, X } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -77,12 +78,16 @@ export default function Comments({ post }: Props) {
             <div key={comment._id} className='flex gap-x-2 border-t p-2 border-muted-foreground'>
               <Link href={`/${lng}/user/${comment.user.username}`}>
                 <Avatar className={'size-8 sticky top-[158px] md:top-[98px]'}>
-                  <AvatarImage
-                    src={
-                      comment.user.profileImage ||
-                      'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-                    }
-                  />
+                  <AvatarImage src={comment.user.profileImage} alt={comment.user.fullName!} />
+                  <AvatarFallback>
+                    <Image
+                      src={
+                        'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+                      }
+                      alt={comment.user.fullName.at(0)?.toUpperCase()!}
+                      fill
+                    />
+                  </AvatarFallback>
                 </Avatar>
               </Link>
               <div className='flex flex-1 flex-col gap-y-2'>

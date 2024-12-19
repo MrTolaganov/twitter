@@ -41,7 +41,7 @@ export default function About({ user, numFollowings, numFollowers }: Props) {
           </span>
         </div>
         {location && (
-          <div className='flex items-center gap-x-2 text-muted-foreground'>
+          <div className='flex items-center gap-x-2 text-blue-400'>
             <MapPin size={14} />
             <span className='text-sm'>{location}</span>
           </div>
@@ -52,7 +52,7 @@ export default function About({ user, numFollowings, numFollowers }: Props) {
             <span className='text-sm'>{bio}</span>
           </div>
         )}
-        <div className='text-sm text-blue-400/80 flex items-center gap-x-8 lowercase'>
+        <div className='text-sm text-blue-400 flex items-center gap-x-8 lowercase'>
           <div
             className='hover:underline cursor-pointer'
             onClick={() => onClickFollows('followings')}

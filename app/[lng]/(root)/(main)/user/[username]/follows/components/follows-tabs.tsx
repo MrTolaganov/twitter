@@ -26,14 +26,18 @@ export default function FollowsTabs({ followings, followers }: Props) {
         </TabsTrigger>
       </TabsList>
       <TabsContent value='followings' className='p-2'>
-        {followings.map(following => (
-          <UserCard key={following._id} {...following} />
-        ))}
+        {followings.length > 0 ? (
+          followings.map(following => <UserCard key={following._id} {...following} />)
+        ) : (
+          <div className='text-center py-4'>{t('noFollowingsFound')}</div>
+        )}
       </TabsContent>
       <TabsContent value='followers' className='p-2'>
-        {followers.map(follower => (
-          <UserCard key={follower._id} {...follower} />
-        ))}
+        {followers.length > 0 ? (
+          followers.map(follower => <UserCard key={follower._id} {...follower} />)
+        ) : (
+          <div className='text-center py-4'>{t('noFollowersFound')}</div>
+        )}
       </TabsContent>
     </Tabs>
   )

@@ -24,7 +24,7 @@ export default function AlertModal() {
 
   const onDelete = () => {
     const promise = deletePost(postId)
-      .then(() => router.push(`/${lng}`))
+      .then(() => router.push(`/${lng}/home`))
       .finally(() => setOpenedAlert(false))
     toast.promise(promise, {
       loading: t('loading'),
@@ -41,7 +41,7 @@ export default function AlertModal() {
           <AlertDialogDescription>{t('alertDialogDescription')}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+          <AlertDialogCancel onClick={() => setOpenedAlert(false)}>{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction className='bg-red-500 hover:bg-red-500 text-white' onClick={onDelete}>
             {t('continue')}
           </AlertDialogAction>

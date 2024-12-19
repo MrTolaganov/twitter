@@ -112,5 +112,7 @@
   "noPostsFound": "Post bulunamadı",
   "noLikeFound": "Beğeni bulunamadı",
   "noCommentsFound": "Yorum bulunamadı",
-  "noImagesFound": "Resim bulunamadı"
+  "noImagesFound": "Resim bulunamadı",
+  "noFollowersFound": "Takipçi bulunamadı",
+  "noFollowingsFound": "Takip edilen bulunamadı"
 }

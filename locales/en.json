@@ -114,5 +114,7 @@
   "noPostsFound": "No posts found",
   "noLikeFound": "No likes found",
   "noCommentsFound": "No comments found",
-  "noImagesFound": "No images found"
+  "noImagesFound": "No images found",
+  "noFollowersFound": "No followers found",
+  "noFollowingsFound": "No followings found"
 }

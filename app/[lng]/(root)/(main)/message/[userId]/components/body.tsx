@@ -115,44 +115,38 @@ export default function Body({ chats }: Props) {
             </span>
           </div>
         ) : (
-          allChats.map(chat => (
+          allChats.map(({ _id, message, image, receiver, createdAt, isRead }) => (
             <div
-              key={chat._id}
+              key={_id}
               className={cn(
                 'relative max-w-80  rounded-t-xl min-w-20',
-                chat.receiver._id === userId
+                receiver._id === userId
                   ? 'self-end bg-blue-500/80 text-foreground rounded-bl-xl'
                   : 'self-start bg-secondary rounded-br-xl',
-                chat.message === '🖐️' && 'text-center',
-                !chat.image && 'px-2 pb-3 pt-1'
+                message === '🖐️' && 'text-center',
+                !image && 'px-2 pb-3 pt-1'
               )}
             >
               <ContextMenu>
                 <ContextMenuTrigger>
-                  {chat.image ? (
-                    <Image src={chat.image} alt='Image' width={300} height={200} />
-                  ) : (
-                    chat.message
-                  )}
+                  {image ? <Image src={image} alt='Image' width={300} height={200} /> : message}
                   <div className='flex items-center absolute bottom-0 right-0 text-foreground'>
-                    <span className='text-[8px] mr-1'>
-                      {format(chat.createdAt, 'MMM dd HH:mm')}
-                    </span>
-                    {chat.receiver._id === userId &&
-                      (chat.isRead ? <CheckCheck size={12} /> : <Check size={12} />)}
+                    <span className='text-[8px] mr-1'>{format(createdAt, 'MMM dd HH:mm')}</span>
+                    {receiver._id === userId &&
+                      (isRead ? <CheckCheck size={12} /> : <Check size={12} />)}
                   </div>
                 </ContextMenuTrigger>
-                <ContextMenuContent className={cn(chat.receiver._id !== userId && 'hidden')}>
+                <ContextMenuContent className={cn(receiver._id !== userId && 'hidden')}>
                   <ContextMenuItem
-                    className={cn(chat.image ? 'hidden' : 'flex items-center gap-x-2')}
-                    onClick={() => onEdit(chat._id, chat.message)}
+                    className={cn(image ? 'hidden' : 'flex items-center gap-x-2')}
+                    onClick={() => onEdit(_id, message)}
                   >
                     <Pencil size={14} />
                     <span>{t('edit')}</span>
                   </ContextMenuItem>
                   <ContextMenuItem
                     className='flex items-center gap-x-2'
-                    onClick={() => onDelete(chat._id)}
+                    onClick={() => onDelete(_id)}
                   >
                     <Trash2 size={14} />
                     <span>{t('delete')}</span>

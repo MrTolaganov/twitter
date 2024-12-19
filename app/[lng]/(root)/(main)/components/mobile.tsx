@@ -33,22 +33,22 @@ export default function Mobile() {
 
   return (
     <div className='md:hidden fixed bottom-0 grid grid-cols-5 z-40 w-full border-t border-muted-foreground p-1 bg-background'>
-      {sidebarLinks.map(sidebarLink => (
+      {sidebarLinks.map(({ path, icon: Icon }) => (
         <Link
-          key={sidebarLink.path}
-          href={sidebarLink.path}
+          key={path}
+          href={path}
           className={cn(
             'relative mx-auto hover:bg-primary hover:text-secondary p-2 rounded-full',
-            sidebarLink.path === pathname.slice(3) && 'bg-primary text-secondary font-bold text-xl'
+            path === pathname.slice(3) && 'bg-primary text-secondary font-bold text-xl'
           )}
         >
-          <sidebarLink.icon />
-          {sidebarLink.path === '/notifications' && numNotifications > 0 && (
+          <Icon />
+          {path === '/notifications' && numNotifications > 0 && (
             <span className='absolute size-3 bg-blue-400 text-xs top-0 right-0 rounded-full flex justify-center items-center p-2'>
               {numNotifications}
             </span>
           )}
-          {sidebarLink.path === '/messages' && numMessages > 0 && (
+          {path === '/messages' && numMessages > 0 && (
             <span className='absolute size-3 bg-blue-400 text-xs top-0 right-0 rounded-full flex items-center justify-center p-2'>
               {numMessages}
             </span>

@@ -4,6 +4,11 @@ import Logo from './components/logo'
 import { nextAuthOptions } from '@/lib/auth-options'
 import { redirect } from 'next/navigation'
 import { ServerLngParams } from '@/types'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Twitter | Auth',
+}
 
 export default async function Page({ params }: ServerLngParams) {
   const { lng } = await params

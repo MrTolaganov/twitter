@@ -14,9 +14,9 @@ export default function UsersList({ exploredUsers }: Props) {
   const { query } = useSearchQuery()
 
   const filteredUsers = exploredUsers.filter(
-    user =>
-      user.fullName.toLowerCase().includes(query.toLowerCase().trim()) ||
-      user.username.toLowerCase().includes(query.toLowerCase().trim())
+    ({ fullName, username }) =>
+      fullName.toLowerCase().includes(query.toLowerCase().trim()) ||
+      username.toLowerCase().includes(query.toLowerCase().trim())
   )
 
   return (

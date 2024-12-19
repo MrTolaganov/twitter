@@ -11,6 +11,7 @@ import { sendNotification } from '@/actions/notification.action'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 export default function UserCard({ _id, fullName, username, profileImage, isFollowing }: IUser) {
   const { lng } = useParams()
@@ -45,15 +46,15 @@ export default function UserCard({ _id, fullName, username, profileImage, isFoll
     <div className='flex items-center justify-between p-2 hover:bg-secondary rounded-full relative'>
       <div className='flex items-center gap-x-2 cursor-pointer flex-1' onClick={onClickCard}>
         <Avatar>
-          <AvatarImage
-            src={
-              profileImage ||
-              'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-            }
-            alt={fullName}
-          />
-          <AvatarFallback className='bg-primary text-secondary font-bold'>
-            {fullName.at(0)?.toUpperCase()}
+          <AvatarImage src={profileImage} alt={fullName!} />
+          <AvatarFallback>
+            <Image
+              src={
+                'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+              }
+              alt={fullName.at(0)?.toUpperCase()!}
+              fill
+            />
           </AvatarFallback>
         </Avatar>
         <div className='flex flex-col justify-between pr-2'>

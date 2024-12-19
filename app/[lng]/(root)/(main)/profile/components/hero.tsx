@@ -1,6 +1,6 @@
 'use client'
 
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { useSession } from 'next-auth/react'
 import SetUp from './setup'
@@ -38,13 +38,18 @@ export default function Hero() {
             >
               <Avatar className='size-20 md:size-32 border-4 border-blue-400/80'>
                 <AvatarImage
-                  src={
-                    session?.currentUser.profileImage ||
-                    'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-                  }
-                  alt={session?.currentUser.fullName}
-                  className='object-cover'
+                  src={session?.currentUser.profileImage}
+                  alt={session?.currentUser.fullName!}
                 />
+                <AvatarFallback>
+                  <Image
+                    src={
+                      'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+                    }
+                    alt={session?.currentUser.fullName.at(0)?.toUpperCase()!}
+                    fill
+                  />
+                </AvatarFallback>
               </Avatar>
             </Link>
           </div>

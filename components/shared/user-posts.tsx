@@ -20,19 +20,19 @@ export default function UserPosts({ userPosts }: Props) {
   return (
     <div className='px-4'>
       {userPosts.length > 0 ? (
-        userPosts.map(post => (
+        userPosts.map(({ _id, text, image, createdAt }) => (
           <Link
-            key={post._id}
-            href={`/${lng}/post/${post._id}`}
+            key={_id}
+            href={`/${lng}/post/${_id}`}
             className='block border-b border-muted-foreground py-4'
           >
             <div className='flex gap-x-4 pb-4'>
-              <div className='prose dark:prose-invert flex-1'>{parse(post.text)}</div>
+              <div className='prose dark:prose-invert flex-1'>{parse(text)}</div>
               <span className='text-muted-foreground'>
-                &#x2022; {formatPostTime(formatDistanceToNowStrict(post.createdAt))}
+                &#x2022; {formatPostTime(formatDistanceToNowStrict(createdAt))}
               </span>
             </div>
-            {post.image && <Image src={post.image} alt='Post image' width={500} height={500} />}
+            {image && <Image src={image} alt='image' width={500} height={500} />}
           </Link>
         ))
       ) : (

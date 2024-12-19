@@ -2,21 +2,14 @@
 
 import { IPost } from '@/types'
 import React, { useState } from 'react'
-import { Avatar, AvatarImage } from '../ui/avatar'
-import { Heart, MessageCircleMore, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Dot, Heart, MessageCircleMore, Pencil, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import parse from 'html-react-parser'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { cn, formatPostTime } from '@/lib/utils'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import { FcLike } from 'react-icons/fc'
 import { FaCommentDots } from 'react-icons/fa'
 import { useSession } from 'next-auth/react'
@@ -76,12 +69,16 @@ export default function PostCard({ post, detailed }: Props) {
       <div className='flex gap-x-2 border-t p-2 border-muted-foreground'>
         <Link href={`/${lng}/user/${author.username}`}>
           <Avatar className={cn('size-10 ', !detailed && 'sticky top-[158px] md:top-[98px]')}>
-            <AvatarImage
-              src={
-                author.profileImage ||
-                'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-              }
-            />
+            <AvatarImage src={author.profileImage} alt={author.fullName!} />
+            <AvatarFallback>
+              <Image
+                src={
+                  'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+                }
+                alt={author.fullName.at(0)?.toUpperCase()!}
+                fill
+              />
+            </AvatarFallback>
           </Avatar>
         </Link>
         <div className='flex flex-1 flex-col gap-y-2'>
@@ -96,36 +93,11 @@ export default function PostCard({ post, detailed }: Props) {
               >
                 {author.username}
               </Link>
+              <Dot className='text-muted-foreground' />
               <span className='text-muted-foreground text-sm'>
-                &#x2022; {formatPostTime(formatDistanceToNowStrict(createdAt))}
+                {formatPostTime(formatDistanceToNowStrict(createdAt))}
               </span>
             </div>
-            {author._id === session?.currentUser._id && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <MoreHorizontal className='text-muted-foreground hover:text-blue-400 cursor-pointer' />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem asChild className='cursor-pointer'>
-                    <Link href={`/${lng}/edit-post/${_id}`}>
-                      <Pencil className='size-5' />
-                      <span>{t('editPost')}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    className='cursor-pointer'
-                    onClick={() => {
-                      setOpenedAlert(true)
-                      setPostId(_id)
-                    }}
-                  >
-                    <Trash2 className='size-5 text-red-500' />
-                    <span className='text-red-500'>{t('deletePost')}</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
           </div>
           <Link href={`/${lng}/post/${_id}`} className='prose dark:prose-invert'>
             {parse(text)}
@@ -163,6 +135,24 @@ export default function PostCard({ post, detailed }: Props) {
               </span>
             </div>
           </div>
+          {detailed && author._id === session?.currentUser._id && (
+            <div className='flex items-center gap-x-8 text-muted-foreground text-sm'>
+              <Link href={`/${lng}/edit-post/${_id}`} className='flex items-center gap-x-2'>
+                <Pencil className='size-4' />
+                <span className='flex-1'>{t('editPost')}</span>
+              </Link>
+              <div
+                className='cursor-pointer flex items-center gap-x-2 hover:text-red-500'
+                onClick={() => {
+                  setOpenedAlert(true)
+                  setPostId(_id)
+                }}
+              >
+                <Trash2 className='size-4 text-destructive 0' />
+                <span className='text-destructive flex-1 0'>{t('deletePost')}</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <AlertModal />

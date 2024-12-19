@@ -15,6 +15,7 @@ import { hasUnreadNotifications } from '@/actions/notification.action'
 import { useNotification } from '@/hooks/use-notification'
 import { useMessage } from '@/hooks/use-message'
 import { hasUnreadMessages } from '@/actions/chat.action'
+import Image from 'next/image'
 
 export default function Sidebar() {
   const { data: session } = useSession()
@@ -43,29 +44,29 @@ export default function Sidebar() {
       <div className='flex flex-col gap-y-2'>
         <Logo />
         <div className='flex flex-col gap-y-2 max-md:items-center'>
-          {sidebarLinks.map(sidebarLink => (
+          {sidebarLinks.map(({ path, name, icon: Icon }) => (
             <Link
-              key={sidebarLink.path}
-              href={sidebarLink.path}
+              key={path}
+              href={path}
               className={cn(
                 'flex items-center gap-2 p-4 text-lg font-semibold rounded-full hover:bg-secondary',
-                sidebarLink.path === pathname.slice(3) && 'bg-secondary font-bold text-xl'
+                path === pathname.slice(3) && 'bg-secondary font-bold text-xl'
               )}
             >
               <div className='relative'>
-                <sidebarLink.icon />
-                {sidebarLink.path === '/notifications' && numNotifications > 0 && (
+                <Icon />
+                {path === '/notifications' && numNotifications > 0 && (
                   <span className='absolute size-3 bg-blue-400 text-xs top-0 right-0 rounded-full flex justify-center items-center p-2'>
                     {numNotifications}
                   </span>
                 )}
-                {sidebarLink.path === '/messages' && numMessages > 0 && (
+                {path === '/messages' && numMessages > 0 && (
                   <span className='absolute size-3 bg-blue-400 text-xs top-0 right-0 rounded-full flex justify-center items-center p-2'>
                     {numMessages}
                   </span>
                 )}
               </div>
-              <span className='max-md:hidden'>{t(sidebarLink.name)}</span>
+              <span className='max-md:hidden'>{t(name)}</span>
             </Link>
           ))}
         </div>
@@ -87,14 +88,17 @@ export default function Sidebar() {
       >
         <Avatar>
           <AvatarImage
-            src={
-              session?.currentUser.profileImage ||
-              'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-            }
-            alt={session?.currentUser.fullName}
+            src={session?.currentUser.profileImage}
+            alt={session?.currentUser.fullName!}
           />
-          <AvatarFallback className='bg-primary text-secondary'>
-            {session?.currentUser.fullName.at(0)?.toUpperCase()}
+          <AvatarFallback>
+            <Image
+              src={
+                'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+              }
+              alt={session?.currentUser.fullName.at(0)?.toUpperCase()!}
+              fill
+            />
           </AvatarFallback>
         </Avatar>
         <div className='max-md:hidden flex flex-col justify-between pr-2'>

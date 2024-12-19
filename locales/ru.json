@@ -114,5 +114,7 @@
   "noPostsFound": "Пост не найдено",
   "noLikeFound": "Нравится не найдено",
   "noCommentsFound": "Комментарии не найдены",
-  "noImagesFound": "Изображения не найдены"
+  "noImagesFound": "Изображения не найдены",
+  "noFollowersFound": "Последователи не найдены",
+  "noFollowingsFound": "Подписки не найдены"
 }

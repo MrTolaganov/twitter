@@ -114,5 +114,7 @@
   "noPostsFound": "Hech qanday post topilmadi",
   "noLikeFound": "Hech qanday layk topilmadi",
   "noCommentsFound": "Hech qanday izoh topilmadi",
-  "noImagesFound": "Hech qanday rasm topilmadi"
+  "noImagesFound": "Hech qanday rasm topilmadi",
+  "noFollowersFound": "Hech qanday kuzatuvchi topilmadi",
+  "noFollowingsFound": "Hech qanday kuzatayotgan topilmadi"
 }
