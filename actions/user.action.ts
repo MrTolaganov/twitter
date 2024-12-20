@@ -1,6 +1,5 @@
 'use server'
 
-import { getCookieLng } from '@/lib/cookie'
 import { connectDatabase } from '@/lib/mongoose'
 import Follow from '@/models/follow.model'
 import User from '@/models/user.model'
@@ -9,9 +8,8 @@ import { IUser } from '@/types'
 export async function checkUser(email: string) {
   try {
     await connectDatabase()
-    const { t } = await getCookieLng()
     const existedEmail = await User.findOne({ email })
-    if (existedEmail) throw new Error(t('signedUpEmail'))
+    if (existedEmail) throw new Error('signedUpEmail')
   } catch (error) {
     throw new Error(error as string)
   }
