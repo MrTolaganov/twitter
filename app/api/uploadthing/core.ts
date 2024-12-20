@@ -14,6 +14,7 @@ export const ourFileRouter = {
       if (!token) throw new UploadThingError('Unauthorized')
       return { token }
     })
+    // @ts-ignore
     .onUploadComplete(async ({ file }) => {
       return file
     }),
