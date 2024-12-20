@@ -1,7 +1,9 @@
 'use client'
 
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { t } from 'i18next'
 import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { FaXTwitter } from 'react-icons/fa6'
@@ -17,16 +19,19 @@ export default function Header() {
           <FaXTwitter className='size-10' />
         </Link>
       </div>
-      <span className=''>Post</span>
+      <span className='capitalize'>{t('post')}</span>
       <Link href={`/${lng}/profile`}>
         <Avatar className='size-10'>
-          <AvatarImage
-            src={
-              session?.currentUser.profileImage ||
-              'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-            }
-            alt={session?.currentUser.fullName!}
-          />
+          <AvatarFallback>
+            <Image
+              src={
+                session?.currentUser.profileImage ||
+                'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+              }
+              alt={session?.currentUser.fullName!}
+              fill
+            />
+          </AvatarFallback>
         </Avatar>
       </Link>
     </div>

@@ -2,7 +2,7 @@
 
 import { followAndUnfollow } from '@/actions/follow.action'
 import { sendNotification } from '@/actions/notification.action'
-import { Avatar,  AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import useTranslate from '@/hooks/use-translate'
 import { IUser } from '@/types'
@@ -52,13 +52,16 @@ export default function Hero({ _id, backgroundImage, profileImage, fullName, isF
             target='_blank'
           >
             <Avatar className='size-20 md:size-32 border-4 border-blue-400/80'>
-              <AvatarImage
-                src={
-                  profileImage ||
-                  'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-                }
-                alt={fullName!}
-              />
+              <AvatarFallback>
+                <Image
+                  src={
+                    profileImage ||
+                    'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+                  }
+                  alt={fullName!}
+                  fill
+                />
+              </AvatarFallback>
             </Avatar>
           </Link>
         </div>

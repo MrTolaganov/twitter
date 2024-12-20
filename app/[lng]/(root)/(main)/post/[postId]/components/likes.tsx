@@ -58,7 +58,7 @@ export default function Likes({ postId }: Props) {
         ) : filteredLikedusers.length > 0 ? (
           filteredLikedusers.map(user => <UserCard key={user._id} {...user} />)
         ) : (
-          <div className='mx-auto'>{t('noLikesFound')}</div>
+          <div className='text-center py-4'>{t('noLikesFound')}</div>
         )}
       </div>
     </div>
