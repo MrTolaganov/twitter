@@ -29,9 +29,8 @@ export async function register(fullName: string, email: string) {
 export async function login(email: string) {
   try {
     await connectDatabase()
-    const { t } = await getCookieLng()
     const existedUser = await User.findOne({ email })
-    if (!existedUser) throw new Error(t('notSignedUp'))
+    if (!existedUser) throw new Error('notSignedUp')
     return { fullName: existedUser.fullName }
   } catch (error) {
     throw new Error(error as string)

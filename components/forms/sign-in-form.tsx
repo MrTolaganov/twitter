@@ -46,7 +46,7 @@ export default function SignInForm() {
         error: t('somethingWentWrong'),
       })
     } catch (error: any) {
-      setErrorMessage(error.message?.split(': ').at(1))
+      setErrorMessage(t(error.message.split(': ').at(1)))
     } finally {
       setIsLoading(false)
     }
