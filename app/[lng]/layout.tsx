@@ -19,14 +19,14 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.otabektx.uz'),
   title: 'Twitter',
-  description: 'This is the twitter clone project that developed by Otabek Tulaganov',
+  description: 'This is the Twitter clone project that developed by Otabek Tulaganov',
   authors: [{ name: 'Otabek Tulaganov', url: 'https://www.otabektx.uz' }],
   icons: {
     icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjljjHnedCRCaCfzQwcK6qkflmLoUHgRpZAw&s',
   },
   openGraph: {
     title: 'Twitter',
-    description: 'This is the twitter clone project that developed by Otabek Tulaganov',
+    description: 'This is the Twitter clone project that developed by Otabek Tulaganov',
     images: 'https://utfs.io/f/73W6mq93YPC0cD3U78hPkVjZhxX6peTwySuMndA3Krs1IQUN',
     type: 'website',
     url: 'https://www.otabektx.uz',

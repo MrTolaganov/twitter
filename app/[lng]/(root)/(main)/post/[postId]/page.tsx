@@ -7,6 +7,7 @@ import PostTabs from './components/post-tabs'
 import { getPostLikes } from '@/actions/like.action'
 import { getPostComments } from '@/actions/comment.action'
 import { Metadata } from 'next'
+import parse from 'html-react-parser'
 
 interface Props {
   params: Promise<{ postId: string }>
@@ -16,13 +17,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { postId } = await params
   const session = await getServerSession(nextAuthOptions)
   const { post } = await getDetailedPost(postId, session?.currentUser._id!)
-  
+
   return {
     title: `Twitter | ${post.author.fullName}'s post`,
     description: post.text,
     openGraph: {
       title: `Twitter | ${post.author.fullName}'s post`,
-      description: post.text,
+      description: parse(post.text).toString(),
       images: post.image,
     },
   }
