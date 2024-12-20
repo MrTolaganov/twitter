@@ -110,7 +110,7 @@
   "alertDialogDescription": "Bu eylem geri alınamaz. Bu, gönderinizi kalıcı olarak silecek ve verilerinizi sunucularımızdan kaldıracaktır.",
   "noUsersFound": "Kullanıcı bulunamadı",
   "noPostsFound": "Post bulunamadı",
-  "noLikeFound": "Beğeni bulunamadı",
+  "noLikesFound": "Beğeni bulunamadı",
   "noCommentsFound": "Yorum bulunamadı",
   "noImagesFound": "Resim bulunamadı",
   "noFollowersFound": "Takipçi bulunamadı",

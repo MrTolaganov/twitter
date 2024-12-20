@@ -7,7 +7,7 @@ import { useParams, usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import useTranslate from '@/hooks/use-translate'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
@@ -15,7 +15,6 @@ import { hasUnreadNotifications } from '@/actions/notification.action'
 import { useNotification } from '@/hooks/use-notification'
 import { useMessage } from '@/hooks/use-message'
 import { hasUnreadMessages } from '@/actions/chat.action'
-import Image from 'next/image'
 
 export default function Sidebar() {
   const { data: session } = useSession()
@@ -88,18 +87,12 @@ export default function Sidebar() {
       >
         <Avatar>
           <AvatarImage
-            src={session?.currentUser.profileImage}
+            src={
+              session?.currentUser.profileImage ||
+              'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+            }
             alt={session?.currentUser.fullName!}
           />
-          <AvatarFallback>
-            <Image
-              src={
-                'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-              }
-              alt={session?.currentUser.fullName.at(0)?.toUpperCase()!}
-              fill
-            />
-          </AvatarFallback>
         </Avatar>
         <div className='max-md:hidden flex flex-col justify-between pr-2'>
           <div className='font-semibold'>{session?.currentUser.fullName}</div>

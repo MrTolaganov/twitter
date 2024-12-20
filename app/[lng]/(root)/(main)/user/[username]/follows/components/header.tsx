@@ -1,11 +1,10 @@
 'use client'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar,  AvatarImage } from '@/components/ui/avatar'
 import { useFollowsTab } from '@/hooks/use-follows-tab'
 import useTranslate from '@/hooks/use-translate'
 import { IUser } from '@/types'
 import { useSession } from 'next-auth/react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { FaXTwitter } from 'react-icons/fa6'
@@ -33,18 +32,12 @@ export default function Header({ user }: Props) {
       <Link href={`/${lng}/profile`}>
         <Avatar className='size-10'>
           <AvatarImage
-            src={session?.currentUser.profileImage}
+            src={
+              session?.currentUser.profileImage ||
+              'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+            }
             alt={session?.currentUser.fullName!}
           />
-          <AvatarFallback>
-            <Image
-              src={
-                'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-              }
-              alt={session?.currentUser.fullName.at(0)?.toUpperCase()!}
-              fill
-            />
-          </AvatarFallback>
         </Avatar>
       </Link>
     </div>

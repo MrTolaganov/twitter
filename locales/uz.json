@@ -112,7 +112,7 @@
   "alertDialogDescription": "Bu amalni ortga qaytarib bo‘lmaydi. Bu sizning postingizni butunlay o'chirib tashlaydi va ma'lumotlaringizni serverlarimizdan olib tashlaydi.",
   "noUsersFound": "Hech qanday foydalanuvchi topilmadi",
   "noPostsFound": "Hech qanday post topilmadi",
-  "noLikeFound": "Hech qanday layk topilmadi",
+  "noLikesFound": "Hech qanday layk topilmadi",
   "noCommentsFound": "Hech qanday izoh topilmadi",
   "noImagesFound": "Hech qanday rasm topilmadi",
   "noFollowersFound": "Hech qanday kuzatuvchi topilmadi",

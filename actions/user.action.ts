@@ -9,7 +9,8 @@ export async function checkUser(email: string) {
   try {
     await connectDatabase()
     const existedEmail = await User.findOne({ email })
-    if (existedEmail) throw new Error('signedUpEmail')
+    if (existedEmail) return { isSignedUp: true }
+    return { isSignedUp: false }
   } catch (error) {
     throw new Error(error as string)
   }
@@ -28,8 +29,8 @@ export async function login(email: string) {
   try {
     await connectDatabase()
     const existedUser = await User.findOne({ email })
-    if (!existedUser) throw new Error('notSignedUp')
-    return { fullName: existedUser.fullName }
+    if (!existedUser) return { notSignedUp: true }
+    return { notSignedUp: false, fullName: existedUser.fullName }
   } catch (error) {
     throw new Error(error as string)
   }

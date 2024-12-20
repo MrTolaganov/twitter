@@ -1,7 +1,7 @@
 'use client'
 
 import { clearChatContacts, deleteChatContact, getChatContacts } from '@/actions/chat.action'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { useMessage } from '@/hooks/use-message'
 import useTranslate from '@/hooks/use-translate'
@@ -84,16 +84,13 @@ export default function MessagesList() {
                     className='flex items-center gap-x-2 flex-1'
                   >
                     <Avatar>
-                      <AvatarImage src={profileImage} alt={fullName!} />
-                      <AvatarFallback>
-                        <Image
-                          src={
-                            'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-                          }
-                          alt={fullName.at(0)?.toUpperCase()!}
-                          fill
-                        />
-                      </AvatarFallback>
+                      <AvatarImage
+                        src={
+                          profileImage ||
+                          'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+                        }
+                        alt={fullName!}
+                      />
                     </Avatar>
                     <div className='flex flex-col justify-between pr-2'>
                       <div className='font-semibold text-sm'>{fullName}</div>

@@ -32,24 +32,25 @@ export default function SignInForm() {
   })
 
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
-    try {
-      setIsLoading(true)
-      const { fullName } = await login(values.email)
-      const promise = sendOtp(values.email).then(() => {
+    setIsLoading(true)
+    const { notSignedUp, fullName } = await login(values.email)
+    if (notSignedUp) {
+      setErrorMessage(t('notSignedUp'))
+      setIsLoading(false)
+      return
+    }
+    const promise = sendOtp(values.email)
+      .then(() => {
         setUserData({ fullName, email: values.email })
         setStep('step2')
         setErrorMessage('')
       })
-      toast.promise(promise, {
-        loading: t('loading'),
-        success: t('emailSendSuccess'),
-        error: t('somethingWentWrong'),
-      })
-    } catch (error: any) {
-      setErrorMessage(t(error.message.split(': ').at(1)))
-    } finally {
-      setIsLoading(false)
-    }
+      .finally(() => setIsLoading(false))
+    toast.promise(promise, {
+      loading: t('loading'),
+      success: t('emailSendSuccess'),
+      error: t('somethingWentWrong'),
+    })
   }
 
   return step === 'step1' ? (

@@ -27,8 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Twitter',
     description: 'This is the twitter clone project that developed by Otabek Tulaganov',
-    images:
-      'https://www.thinkdesignagency.co.uk/wp-content/uploads/2023/07/Twitter-rebrands-as-X.jpg',
+    images: 'https://utfs.io/f/73W6mq93YPC0cD3U78hPkVjZhxX6peTwySuMndA3Krs1IQUN',
     type: 'website',
     url: 'https://www.otabektx.uz',
     locale: 'en_US',

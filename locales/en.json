@@ -112,7 +112,7 @@
   "alertDialogDescription": "This action cannot be undone. This will permanently delete your post and remove your data from our servers.",
   "noUsersFound": "No users found",
   "noPostsFound": "No posts found",
-  "noLikeFound": "No likes found",
+  "noLikesFound": "No likes found",
   "noCommentsFound": "No comments found",
   "noImagesFound": "No images found",
   "noFollowersFound": "No followers found",

@@ -2,7 +2,7 @@
 
 import { IPost } from '@/types'
 import React, { useState } from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Avatar, AvatarImage } from '../ui/avatar'
 import { Dot, Heart, MessageCircleMore, Pencil, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -69,16 +69,13 @@ export default function PostCard({ post, detailed }: Props) {
       <div className='flex gap-x-2 border-t p-2 border-muted-foreground'>
         <Link href={`/${lng}/user/${author.username}`}>
           <Avatar className={cn('size-10 ', !detailed && 'sticky top-[158px] md:top-[98px]')}>
-            <AvatarImage src={author.profileImage} alt={author.fullName!} />
-            <AvatarFallback>
-              <Image
-                src={
-                  'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
-                }
-                alt={author.fullName.at(0)?.toUpperCase()!}
-                fill
-              />
-            </AvatarFallback>
+            <AvatarImage
+              src={
+                author.profileImage ||
+                'https://cdn.vectorstock.com/i/500p/71/90/blank-avatar-photo-icon-design-vector-30257190.avif'
+              }
+              alt={author.fullName!}
+            />
           </Avatar>
         </Link>
         <div className='flex flex-1 flex-col gap-y-2'>

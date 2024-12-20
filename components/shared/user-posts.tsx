@@ -36,7 +36,7 @@ export default function UserPosts({ userPosts }: Props) {
           </Link>
         ))
       ) : (
-        <div className='text-center'>{t('noPostsFound')}</div>
+        <div className='text-center py-4'>{t('noPostsFound')}</div>
       )}
     </div>
   )

@@ -24,7 +24,7 @@ export default function PopularPosts() {
 
   useEffect(() => {
     onGetPopularPosts()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -34,7 +34,7 @@ export default function PopularPosts() {
       ) : popularPosts.length > 0 ? (
         popularPosts.map(post => <PostCard key={post._id} post={post} />)
       ) : (
-        <div>{t('noPostsFound')}</div>
+        <div className='py-4 text-center'>{t('noPostsFound')}</div>
       )}
     </div>
   )

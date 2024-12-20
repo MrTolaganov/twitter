@@ -36,7 +36,7 @@ export default function UserLikes({ userLikes }: Props) {
           </Link>
         ))
       ) : (
-        <div className='text-center'>{t('noLikesFound')}</div>
+        <div className='text-center py-4'>{t('noLikesFound')}</div>
       )}
     </div>
   )

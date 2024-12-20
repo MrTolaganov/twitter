@@ -24,7 +24,7 @@ export default function LatestPosts() {
 
   useEffect(() => {
     onGetLatestPosts()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -34,7 +34,7 @@ export default function LatestPosts() {
       ) : latestPosts.length > 0 ? (
         latestPosts.map(post => <PostCard key={post._id} post={post} />)
       ) : (
-        <div>{t('noPostsFound')}</div>
+        <div className='py-4 text-center'>{t('noPostsFound')}</div>
       )}
     </div>
   )

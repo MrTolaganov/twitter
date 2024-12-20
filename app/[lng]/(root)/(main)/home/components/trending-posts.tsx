@@ -24,7 +24,7 @@ export default function TrendingPosts() {
 
   useEffect(() => {
     onGetTrendingPost()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -34,7 +34,7 @@ export default function TrendingPosts() {
       ) : trendingPosts.length > 0 ? (
         trendingPosts.map(post => <PostCard key={post._id} post={post} />)
       ) : (
-        <div>{t('noPostsFound')}</div>
+        <div className='py-4 text-center'>{t('noPostsFound')}</div>
       )}
     </div>
   )
