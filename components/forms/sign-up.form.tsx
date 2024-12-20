@@ -36,16 +36,16 @@ export default function SignUpForm() {
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     setIsLoading(true)
-    const { isSignedUp } = await checkUser(values.email)
+    const { isSignedUp } = await checkUser(values.email.trim())
     if (isSignedUp) {
       setErrorMessage(t('signedUpEmail'))
       setIsLoading(false)
       return
     }
-    const promise = sendOtp(values.email)
+    const promise = sendOtp(values.email.trim())
       .then(() => {
         setStep('step2')
-        setUserData(values)
+        setUserData({ fullName: values.fullName.trim(), email: values.email.trim() })
         setErrorMessage('')
       })
       .finally(() => setIsLoading(false))
