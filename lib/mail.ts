@@ -22,8 +22,6 @@ export async function sendOtp(email: string) {
   const otp = Math.floor(Math.random() * (1000000 - 100000) + 100000)
   const hashedOtp = await bcrypt.hash(otp.toString(), 10)
 
-  console.log(otp)
-
   await Otp.create({
     email,
     otp: hashedOtp,
