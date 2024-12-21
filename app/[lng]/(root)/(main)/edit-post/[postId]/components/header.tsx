@@ -23,7 +23,7 @@ export default function Header() {
       <span>{t('editPost')}</span>
       <Link href={`/${lng}/profile`}>
         <Avatar className='size-10'>
-          <AvatarFallback>
+          <AvatarFallback className='relative'>
             <Image
               src={
                 session?.currentUser.profileImage ||
@@ -31,6 +31,8 @@ export default function Header() {
               }
               alt={session?.currentUser.fullName!}
               fill
+              className='object-cover'
+              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             />
           </AvatarFallback>
         </Avatar>

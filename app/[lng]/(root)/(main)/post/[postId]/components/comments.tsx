@@ -78,7 +78,7 @@ export default function Comments({ post }: Props) {
             <div key={comment._id} className='flex gap-x-2 border-t p-2 border-muted-foreground'>
               <Link href={`/${lng}/user/${comment.user.username}`}>
                 <Avatar className={'size-8 sticky top-[158px] md:top-[98px]'}>
-                  <AvatarFallback>
+                  <AvatarFallback className='relative'>
                     <Image
                       src={
                         comment.user.profileImage ||
@@ -86,6 +86,8 @@ export default function Comments({ post }: Props) {
                       }
                       alt={comment.user.fullName!}
                       fill
+                      className='object-cover'
+                      sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                     />
                   </AvatarFallback>
                 </Avatar>

@@ -46,7 +46,7 @@ export default function UserCard({ _id, fullName, username, profileImage, isFoll
     <div className='flex items-center justify-between p-2 hover:bg-secondary rounded-full relative'>
       <div className='flex items-center gap-x-2 cursor-pointer flex-1' onClick={onClickCard}>
         <Avatar>
-          <AvatarFallback>
+          <AvatarFallback className='relative'>
             <Image
               src={
                 profileImage ||
@@ -54,6 +54,8 @@ export default function UserCard({ _id, fullName, username, profileImage, isFoll
               }
               alt={fullName!}
               fill
+              className='object-cover'
+              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             />
           </AvatarFallback>
         </Avatar>

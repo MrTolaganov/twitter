@@ -32,7 +32,16 @@ export default function UserPosts({ userPosts }: Props) {
                 &#x2022; {formatPostTime(formatDistanceToNowStrict(createdAt))}
               </span>
             </div>
-            {image && <Image src={image} alt='image' width={500} height={500} />}
+            {image && (
+              <Image
+                src={image}
+                alt='image'
+                width={500}
+                height={500}
+                priority
+                className='object-cover'
+              />
+            )}
           </Link>
         ))
       ) : (

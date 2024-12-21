@@ -79,7 +79,8 @@ export default function SetUp() {
                 alt={'Profile image'}
                 width={200}
                 height={200}
-                className='rounded-full absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30'
+                className='rounded-full absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 object-cover'
+                priority
               />
               <UploadButton
                 endpoint={'imageUploader'}
@@ -123,6 +124,7 @@ export default function SetUp() {
                       alt={'Background image'}
                       fill
                       className='object-cover'
+                      sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                     />
                   </div>
                 )}
@@ -153,7 +155,8 @@ export default function SetUp() {
                   alt={'Profile image'}
                   width={100}
                   height={100}
-                  className='rounded-full absolute left-8 -bottom-1/3 z-50'
+                  priority
+                  className='rounded-full absolute left-8 -bottom-1/3 z-50 object-cover'
                 />
               </div>
             </div>

@@ -20,12 +20,15 @@ export default function Hero() {
         <div className='relative bg-muted-foreground h-36 md:h-48 w-full'>
           {session?.currentUser.backgroundImage && (
             <Link href={session.currentUser.backgroundImage} target='_blank'>
-              <Image
-                src={session.currentUser.backgroundImage}
-                alt='Background image'
-                fill
-                className='object-cover'
-              />
+              <div className='relative size-full'>
+                <Image
+                  src={session.currentUser.backgroundImage}
+                  alt='Background image'
+                  fill
+                  className='object-cover'
+                  sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                />
+              </div>
             </Link>
           )}
           <div className='absolute -bottom-1/4 md:-bottom-1/3 left-8 md:left-16'>
@@ -37,7 +40,7 @@ export default function Hero() {
               target='_blank'
             >
               <Avatar className='size-20 md:size-32 border-4 border-blue-400/80'>
-                <AvatarFallback>
+                <AvatarFallback className='relative'>
                   <Image
                     src={
                       session?.currentUser.profileImage ||
@@ -45,6 +48,8 @@ export default function Hero() {
                     }
                     alt={session?.currentUser.fullName!}
                     fill
+                    className='object-cover'
+                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                   />
                 </AvatarFallback>
               </Avatar>

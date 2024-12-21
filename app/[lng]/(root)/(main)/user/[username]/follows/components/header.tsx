@@ -32,7 +32,7 @@ export default function Header({ user }: Props) {
       ).toLowerCase()}`}</span>
       <Link href={`/${lng}/profile`}>
         <Avatar className='size-10'>
-          <AvatarFallback>
+          <AvatarFallback className='relative'>
             <Image
               src={
                 session?.currentUser.profileImage ||
@@ -40,6 +40,7 @@ export default function Header({ user }: Props) {
               }
               alt={session?.currentUser.fullName!}
               fill
+              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             />
           </AvatarFallback>
         </Avatar>

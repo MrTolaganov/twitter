@@ -16,7 +16,14 @@ export default function UserImages({ userImages }: Props) {
       {userImages.length > 0 ? (
         userImages.map(({ _id, image }) => (
           <div key={_id} className='py-4 border-b border-muted-foreground'>
-            <Image src={image} alt='Post image' width={500} height={500} />
+            <Image
+              src={image}
+              alt='Post image'
+              width={500}
+              height={500}
+              priority
+              className='object-cover'
+            />
           </div>
         ))
       ) : (

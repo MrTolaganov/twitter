@@ -16,7 +16,7 @@ export default function Header({ profileImage, fullName, username }: IUser) {
     >
       <div className='flex items-center gap-x-2'>
         <Avatar>
-          <AvatarFallback>
+          <AvatarFallback className='relative'>
             <Image
               src={
                 profileImage ||
@@ -24,6 +24,8 @@ export default function Header({ profileImage, fullName, username }: IUser) {
               }
               alt={fullName!}
               fill
+               className='object-cover'
+              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             />
           </AvatarFallback>
         </Avatar>

@@ -129,7 +129,11 @@ export default function Body({ chats }: Props) {
             >
               <ContextMenu>
                 <ContextMenuTrigger>
-                  {image ? <Image src={image} alt='Image' width={300} height={200} /> : message}
+                  {image ? (
+                    <Image src={image} alt='Image' width={300} height={200} priority />
+                  ) : (
+                    message
+                  )}
                   <div className='flex items-center absolute bottom-0 right-0 text-foreground'>
                     <span className='text-[8px] mr-1'>{format(createdAt, 'MMM dd HH:mm')}</span>
                     {receiver._id === userId &&

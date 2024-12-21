@@ -33,7 +33,7 @@ export default function LangRadio() {
                     <RadioGroupItem value={value} id={value} />
                     <div>{t(name)}</div>
                   </div>
-                  <Image src={`/${value}.png`} alt={name} width={20} height={20} />
+                  <Image src={`/${value}.png`} alt={name!} width={20} height={20} />
                 </div>
               </Label>
             </Link>

@@ -32,7 +32,16 @@ export default function UserLikes({ userLikes }: Props) {
                 &#x2022; {formatPostTime(formatDistanceToNowStrict(createdAt))}
               </span>
             </div>
-            {image && <Image src={image} alt='Post image' width={500} height={500} />}
+            {image && (
+              <Image
+                src={image}
+                alt='Post image'
+                width={500}
+                height={500}
+                priority
+                className='object-cover'
+              />
+            )}
           </Link>
         ))
       ) : (

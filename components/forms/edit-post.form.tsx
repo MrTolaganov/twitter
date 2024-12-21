@@ -105,8 +105,14 @@ export default function EditPostForm({ _id, text, image }: IPost) {
           <div className='bg-secondary relative'>
             {postImage ? (
               <div className='relative'>
-                <div className='w-full h-52'>
-                  <Image src={postImage} alt='Image' fill />
+                <div className='w-full h-52 relative'>
+                  <Image
+                    src={postImage}
+                    alt='Image'
+                    fill
+                    className='object-cover'
+                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                  />
                 </div>
                 <Button
                   type='button'

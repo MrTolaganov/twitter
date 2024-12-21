@@ -84,7 +84,7 @@ export default function MessagesList() {
                     className='flex items-center gap-x-2 flex-1'
                   >
                     <Avatar>
-                      <AvatarFallback>
+                      <AvatarFallback className='relative'>
                         <Image
                           src={
                             profileImage ||
@@ -92,6 +92,8 @@ export default function MessagesList() {
                           }
                           alt={fullName!}
                           fill
+                          className='object-cover'
+                          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                         />
                       </AvatarFallback>
                     </Avatar>
@@ -99,7 +101,13 @@ export default function MessagesList() {
                       <div className='font-semibold text-sm'>{fullName}</div>
                       {lastMessage?.image ? (
                         <div className='flex items-center gap-x-2'>
-                          <Image src={lastMessage.image} alt='Image' width={30} height={20} />
+                          <Image
+                            src={lastMessage.image}
+                            alt='Image'
+                            width={30}
+                            height={20}
+                            className='object-cover'
+                          />
                           <span
                             className={cn('text-sm', lastMessage.isRead && 'text-muted-foreground')}
                           >

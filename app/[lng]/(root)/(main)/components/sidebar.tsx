@@ -87,7 +87,7 @@ export default function Sidebar() {
         className='flex items-center gap-2 font-semibold rounded-full hover:bg-secondary p-2 cursor-pointer md:min-w-1/2'
       >
         <Avatar>
-          <AvatarFallback>
+          <AvatarFallback className='relative'>
             <Image
               src={
                 session?.currentUser.profileImage ||
@@ -95,6 +95,8 @@ export default function Sidebar() {
               }
               alt={session?.currentUser.fullName!}
               fill
+              className='object-cover'
+              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             />
           </AvatarFallback>
         </Avatar>

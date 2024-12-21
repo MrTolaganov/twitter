@@ -69,7 +69,7 @@ export default function PostCard({ post, detailed }: Props) {
       <div className='flex gap-x-2 border-t p-2 border-muted-foreground'>
         <Link href={`/${lng}/user/${author.username}`}>
           <Avatar className={cn('size-10 ', !detailed && 'sticky top-[158px] md:top-[98px]')}>
-            <AvatarFallback>
+            <AvatarFallback className='relative'>
               <Image
                 src={
                   author.profileImage ||
@@ -77,6 +77,8 @@ export default function PostCard({ post, detailed }: Props) {
                 }
                 alt={author.fullName!}
                 fill
+                className='object-cover'
+                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
               />
             </AvatarFallback>
           </Avatar>
@@ -104,7 +106,14 @@ export default function PostCard({ post, detailed }: Props) {
           </Link>
           {image && (
             <Link href={`/${lng}/post/${_id}`}>
-              <Image src={image} alt='Post image' width={500} height={500} />
+              <Image
+                src={image}
+                alt='Post image'
+                width={500}
+                height={500}
+                priority
+                className='object-cover'
+              />
             </Link>
           )}
           <div className={cn(detailed ? 'hidden' : 'flex items-center gap-x-8 text-sm')}>
