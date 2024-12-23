@@ -75,12 +75,12 @@ export async function getLastThreeUsers(userId: string) {
           lastThreeUsers.push({ ...user._doc, isFollowing: Boolean(followingUser) })
           count++
         }
-        if (count === 3) break
+        if (count === 5) break
       }
     } else {
       lastThreeUsers = await User.find({ _id: { $ne: userId } })
         .sort({ createdAt: -1 })
-        .limit(3)
+        .limit(5)
     }
 
     return { users: JSON.parse(JSON.stringify(lastThreeUsers)) as IUser[] }
