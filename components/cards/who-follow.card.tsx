@@ -20,7 +20,7 @@ export default function WhoFollowCard({ users }: { users: IUser[] }) {
         {users.map(user => (
           <UserCard key={user._id} {...user} />
         ))}
-        {users.length > 5 && (
+        {users.length > 4 && (
           <Link
             href={`/${lng}/explore`}
             className='w-full p-2 block hover:bg-blue-400/10 rounded-md underline text-blue-400 text-center'
