@@ -9,9 +9,7 @@ interface Props {
   params: Promise<{ postId: string }>
 }
 
-export const metadata: Metadata = {
-  title: 'Twitter | Edit post',
-}
+export const metadata: Metadata = { title: 'Twitter | Edit post' }
 
 export default async function Page({ params }: Props) {
   const { postId } = await params

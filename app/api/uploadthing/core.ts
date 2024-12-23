@@ -6,18 +6,14 @@ import { nextAuthOptions } from '@/lib/auth-options'
 const f = createUploadthing()
 
 export const ourFileRouter = {
-  imageUploader: f({
-    image: { maxFileSize: '4MB', maxFileCount: 1 },
-  })
+  imageUploader: f({ image: { maxFileSize: '4MB', maxFileCount: 1 } })
     .middleware(async () => {
       const token = getServerSession(nextAuthOptions)
       if (!token) throw new UploadThingError('Unauthorized')
       return { token }
     })
     // @ts-ignore
-    .onUploadComplete(async ({ file }) => {
-      return file
-    }),
+    .onUploadComplete(async ({ file }) => ({ file })),
 } satisfies FileRouter
 
 export type OurFileRouter = typeof ourFileRouter

@@ -17,7 +17,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { postId } = await params
   const session = await getServerSession(nextAuthOptions)
   const { post } = await getDetailedPost(postId, session?.currentUser._id!)
-
   return {
     title: `Twitter | ${post.author.fullName}'s post`,
     description: post.text,

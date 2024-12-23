@@ -6,9 +6,7 @@ import { redirect } from 'next/navigation'
 import { ServerLngParams } from '@/types'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Twitter | Auth',
-}
+export const metadata: Metadata = { title: 'Twitter | Auth' }
 
 export default async function Page({ params }: ServerLngParams) {
   const { lng } = await params

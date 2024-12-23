@@ -3,9 +3,7 @@ import Header from '../components/header'
 import LangRadio from './components/lang-radio'
 import ModeToggle from './components/mode-toggle'
 
-export const metadata: Metadata = {
-  title: 'Twitter | Settings',
-}
+export const metadata: Metadata = { title: 'Twitter | Settings' }
 
 export default function Page() {
   return (

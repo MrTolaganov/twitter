@@ -12,16 +12,20 @@ interface Props {
 }
 
 export default function FollowsTabs({ followings, followers }: Props) {
-  const { value } = useFollowsTab()
+  const { value, setValue } = useFollowsTab()
   const { t } = useTranslate()
 
   return (
     <Tabs defaultValue={value}>
       <TabsList className='grid w-full grid-cols-2'>
-        <TabsTrigger value='followings' className='lowercase'>
-          {followings.length} {followings.length > 1 ? t('followings') : t('follower')}
+        <TabsTrigger
+          value='followings'
+          className='lowercase'
+          onClick={() => setValue('followings')}
+        >
+          {followings.length} {followings.length > 1 ? t('followings') : t('following')}
         </TabsTrigger>
-        <TabsTrigger value='followers' className='lowercase'>
+        <TabsTrigger value='followers' className='lowercase' onClick={() => setValue('followers')}>
           {followers.length} {followers.length > 1 ? t('followers') : t('follower')}
         </TabsTrigger>
       </TabsList>

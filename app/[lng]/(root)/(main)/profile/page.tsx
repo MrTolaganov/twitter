@@ -9,9 +9,7 @@ import { getUserComments } from '@/actions/comment.action'
 import { getUserLikes } from '@/actions/like.action'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Twitter | My profile',
-}
+export const metadata: Metadata = { title: 'Twitter | My profile' }
 
 export default async function Page() {
   const session = await getServerSession(nextAuthOptions)

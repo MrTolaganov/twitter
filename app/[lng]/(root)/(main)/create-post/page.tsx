@@ -2,9 +2,7 @@ import CreatePostForm from '@/components/forms/create-post.form'
 import Header from './components/header'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Twitter | Create post',
-}
+export const metadata: Metadata = { title: 'Twitter | Create post' }
 
 export default function Page() {
   return (

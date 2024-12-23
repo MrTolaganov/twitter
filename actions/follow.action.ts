@@ -36,7 +36,6 @@ export async function getUserFollowings(username: string) {
         followingUsers.push({ ...userFollowing._doc, isFollowing: Boolean(followingUser) })
       }
     }
-
     return { followings: JSON.parse(JSON.stringify(followingUsers)) as IUser[] }
   } catch (error) {
     throw new Error(error as string)

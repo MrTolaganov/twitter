@@ -3,9 +3,7 @@ import Header from '../components/header'
 import CreatePost from './components/create-post'
 import TabBar from './components/tab-bar'
 
-export const metadata: Metadata = {
-  title: 'Twitter | Home',
-}
+export const metadata: Metadata = { title: 'Twitter | Home' }
 
 export default function Page() {
   return (

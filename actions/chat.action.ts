@@ -41,7 +41,6 @@ export async function getChatContacts(userId: string) {
     await connectDatabase()
     const allUsers = await User.find({ _id: { $ne: userId } })
     const allContacts: any[] = []
-
     for (const user of allUsers) {
       const lastMessage = await Chat.findOne({
         $or: [
@@ -53,7 +52,6 @@ export async function getChatContacts(userId: string) {
         .sort({ createdAt: -1 })
       allContacts.push({ ...user._doc, lastMessage })
     }
-
     return {
       contacts: JSON.parse(
         JSON.stringify(
