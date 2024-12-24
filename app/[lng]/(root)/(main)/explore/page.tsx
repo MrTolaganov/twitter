@@ -16,10 +16,10 @@ export default async function Page() {
 
   return (
     <div className='md:w-[calc(100vw/3)] max-md:mb-[49px]'>
-      <div className='max-md:h-[56px]'>
+      <div className='max-md:max-h-[56px]'>
         <Header />
       </div>
-      <div className='h-[64px]'>
+      <div className=''>
         <Serachbar />
       </div>
       <UsersList exploredUsers={exploredUsers} />

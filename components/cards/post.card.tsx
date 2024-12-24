@@ -101,9 +101,12 @@ export default function PostCard({ post, detailed }: Props) {
               </span>
             </div>
           </div>
-          <Link href={`/${lng}/post/${_id}`} className='prose dark:prose-invert'>
+          <div
+            className='prose dark:prose-invert'
+            onClick={() => router.push(`/${lng}/post/${_id}`)}
+          >
             {parse(text)}
-          </Link>
+          </div>
           {image && (
             <Link href={`/${lng}/post/${_id}`}>
               <Image

@@ -20,7 +20,7 @@ export default function UsersList({ exploredUsers }: Props) {
   )
 
   return (
-    <div className='px-4 py-2'>
+    <div className='px-4 py-2 max-md:pt-[110px] md:pt-[56px]'>
       {filteredUsers.length > 0 ? (
         filteredUsers.map(user => <UserCard key={user._id} {...user} />)
       ) : (

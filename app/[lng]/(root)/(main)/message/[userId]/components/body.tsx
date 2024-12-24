@@ -102,7 +102,7 @@ export default function Body({ chats }: Props) {
   return (
     <>
       <div
-        className='min-h-[calc(100vh-205px)] md:h-[calc(100vh-156px)] flex justify-end flex-col mb-[56px] space-y-1 relative'
+        className='max-md:mb-[108px] min-h-[calc(100vh-156px)] flex justify-end flex-col mb-[56px] space-y-1 relative'
         ref={divRef}
       >
         {allChats.length === 0 ? (
