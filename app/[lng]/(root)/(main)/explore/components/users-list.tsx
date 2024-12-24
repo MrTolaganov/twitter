@@ -26,11 +26,6 @@ export default function UsersList({ exploredUsers }: Props) {
       ) : (
         <div className='text-center py-4'>{t('noUsersFound')}</div>
       )}
-      {filteredUsers.length > 0 ? (
-        filteredUsers.map(user => <UserCard key={user._id} {...user} />)
-      ) : (
-        <div className='text-center py-4'>{t('noUsersFound')}</div>
-      )}
     </div>
   )
 }
