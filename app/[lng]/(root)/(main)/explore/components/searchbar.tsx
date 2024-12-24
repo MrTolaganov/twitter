@@ -10,7 +10,7 @@ export default function Serachbar() {
   const { t } = useTranslate()
 
   return (
-    <div className='fixed bg-background z-40 w-full md:w-[calc(100vw/3)] max-md:top-[90px] pb-2'>
+    <div className='fixed bg-background z-10 w-[100vw] md:w-[calc(100vw/3)] max-md:mt-[56px] pb-2'>
       <div className='flex items-center ml-[40px] space-y-2'>
         <Search className='text-muted-foreground mr-[-40px] pr-2 z-30' />
         <Input
