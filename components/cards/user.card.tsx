@@ -28,7 +28,7 @@ export default function UserCard({ _id, fullName, username, profileImage, isFoll
       await sendNotification(
         _id,
         `${session?.currentUser.username} get started to ${following ? 'unfollow' : 'follow'} you`,
-        `/${session?.currentUser.username!}`
+        `/user/${session?.currentUser.username!}`
       )
       setFollowing(prev => !prev)
     } catch (error: any) {

@@ -26,7 +26,7 @@ export default function Hero({ _id, backgroundImage, profileImage, fullName, isF
         `${session?.currentUser.username} get started to ${
           isFollowing ? 'unfollow' : 'follow'
         } you`,
-        `/${session?.currentUser.username!}`
+        `/user/${session?.currentUser.username!}`
       )
     } catch (error: any) {
       toast.error(error.message)

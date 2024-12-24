@@ -40,7 +40,7 @@ export default function Likes({ postId }: Props) {
   }, [])
 
   return (
-    <div className='space-y-4'>
+    <div className='space-y-4 max-md:mb-[49px]'>
       <div className='flex items-center ml-[40px] space-y-2'>
         <Search className='text-muted-foreground mr-[-40px] pr-2 z-50' />
         <Input

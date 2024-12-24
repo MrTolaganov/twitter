@@ -1,9 +1,11 @@
 'use server'
 
+import { nextAuthOptions } from '@/lib/auth-options'
 import { connectDatabase } from '@/lib/mongoose'
 import Follow from '@/models/follow.model'
 import User from '@/models/user.model'
 import { IUser } from '@/types'
+import { getServerSession } from 'next-auth'
 
 export async function followAndUnfollow(followingId: string, followerId: string) {
   try {
@@ -23,6 +25,7 @@ export async function getUserFollowings(username: string) {
   try {
     await connectDatabase()
     const user = await User.findOne({ username })
+    const session = await getServerSession(nextAuthOptions)
     const userFollows = await Follow.find({ follower: user?._id })
       .select('following')
       .populate('following')
@@ -31,7 +34,7 @@ export async function getUserFollowings(username: string) {
     if (userFollowings.length) {
       for (const userFollowing of userFollowings) {
         const followingUser = await Follow.findOne({
-          $and: [{ follower: user._id }, { following: userFollowing._id }],
+          $and: [{ follower: session?.currentUser._id! }, { following: userFollowing._id }],
         })
         followingUsers.push({ ...userFollowing._doc, isFollowing: Boolean(followingUser) })
       }
@@ -46,6 +49,7 @@ export async function getUserFollowers(username: string) {
   try {
     await connectDatabase()
     const user = await User.findOne({ username })
+    const session = await getServerSession(nextAuthOptions)
     const userFollows = await Follow.find({ following: user?._id })
       .select('follower')
       .populate('follower')
@@ -54,7 +58,7 @@ export async function getUserFollowers(username: string) {
     if (userFollowers.length) {
       for (const userFollower of userFollowers) {
         const followingUser = await Follow.findOne({
-          $and: [{ follower: user._id }, { following: userFollower._id }],
+          $and: [{ follower: session?.currentUser._id! }, { following: userFollower._id }],
         })
         followerUsers.push({ ...userFollower._doc, isFollowing: Boolean(followingUser) })
       }
